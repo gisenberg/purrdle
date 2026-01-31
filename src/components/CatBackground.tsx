@@ -89,7 +89,14 @@ export function useCatBackground() {
     setPaused((p) => !p)
   }, [])
 
-  return { current, fading, paused, next, prev, togglePause }
+  const goTo = useCallback((index: number) => {
+    if (fading) return
+    if (intervalRef.current) clearInterval(intervalRef.current)
+    advance(index)
+    if (!paused) startTimer()
+  }, [fading, paused, advance, startTimer])
+
+  return { current, fading, paused, next, prev, togglePause, goTo }
 }
 
 interface CatBackgroundProps {
@@ -106,6 +113,10 @@ export default function CatBackground({ current, fading }: CatBackgroundProps) {
   )
 }
 
-export function getRandomCatUrl(): string {
-  return getImageUrl(randomIndex())
+export function getRandomCatIndex(): number {
+  return randomIndex()
+}
+
+export function getCatImageUrl(index: number): string {
+  return getImageUrl(index)
 }

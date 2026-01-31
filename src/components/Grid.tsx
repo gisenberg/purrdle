@@ -85,10 +85,10 @@ export default function Grid({
       rows.push(emptyRow)
     }
   } else {
-    // Game over: fill remaining rows with plain empty tiles
+    // Game over: fill remaining rows with plain empty tiles, preserving space gaps
     while (rows.length < MAX_GUESSES) {
-      const emptyRow: EvaluatedLetter[] = Array.from({ length: wordLength }, () => ({
-        letter: '',
+      const emptyRow: EvaluatedLetter[] = Array.from({ length: wordLength }, (_, i) => ({
+        letter: target[i] === ' ' ? ' ' : '',
         state: 'empty' as const,
       }))
       rows.push(emptyRow)

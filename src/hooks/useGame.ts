@@ -74,6 +74,7 @@ export function useGame(wordEntry: WordEntry, mode: GameMode) {
   const inputLength = wordLength - allRevealedPositions.size
 
   const [guesses, setGuesses] = useState<string[]>([])
+  const [storedEvaluations, setStoredEvaluations] = useState<EvaluatedLetter[][]>([])
   const [currentGuess, setCurrentGuess] = useState('')
   const [gameStatus, setGameStatus] = useState<GameStatus>('playing')
   const [shakeRow, setShakeRow] = useState(false)
@@ -120,11 +121,11 @@ export function useGame(wordEntry: WordEntry, mode: GameMode) {
   useEffect(() => {
     if (gameStatus !== 'playing') return
     if (inputLength > 0) return
-    const newGuesses = [...guesses, target]
-    setGuesses(newGuesses)
+    setGuesses((prev) => [...prev, target])
+    setStoredEvaluations((prev) => [...prev, evaluateGuess(target, target, allRevealedPositions)])
     setCurrentGuess('')
     setGameStatus('won')
-  }, [inputLength, gameStatus, guesses, target])
+  }, [inputLength, gameStatus, target, allRevealedPositions])
 
   // Snapshot hints used when game ends
   useEffect(() => {
@@ -145,6 +146,7 @@ export function useGame(wordEntry: WordEntry, mode: GameMode) {
     const saved = loadState(dateKey, target)
     if (saved) {
       setGuesses(saved.guesses)
+      setStoredEvaluations(saved.guesses.map((g) => evaluateGuess(g, target, revealedPositions)))
       setGameStatus(saved.gameStatus)
     }
   }, [dateKey, isDaily, target])
@@ -172,8 +174,10 @@ export function useGame(wordEntry: WordEntry, mode: GameMode) {
     }
 
     const fullGuess = buildFullGuess(currentGuess.toLowerCase(), target, allRevealedPositions)
+    const evaluation = evaluateGuess(fullGuess, target, allRevealedPositions)
     const newGuesses = [...guesses, fullGuess]
     setGuesses(newGuesses)
+    setStoredEvaluations((prev) => [...prev, evaluation])
     setCurrentGuess('')
 
     if (fullGuess === target) {
@@ -223,9 +227,7 @@ export function useGame(wordEntry: WordEntry, mode: GameMode) {
     setCurrentGuess((prev) => prev.slice(0, -1))
   }, [gameStatus])
 
-  const evaluatedGuesses: EvaluatedLetter[][] = guesses.map((g) =>
-    evaluateGuess(g, target, allRevealedPositions)
-  )
+  const evaluatedGuesses = storedEvaluations
 
   // Build the full display guess (with revealed letters inserted) for the current row
   const displayGuess = useMemo(() => {

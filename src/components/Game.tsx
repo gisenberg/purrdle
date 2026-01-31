@@ -10,9 +10,10 @@ import GameOver from './GameOver'
 interface GameProps {
   wordEntry: WordEntry
   mode: GameMode
+  onSetBackground: (index: number) => void
 }
 
-export default function Game({ wordEntry, mode }: GameProps) {
+export default function Game({ wordEntry, mode, onSetBackground }: GameProps) {
   const {
     todayWord,
     target,
@@ -120,6 +121,7 @@ export default function Game({ wordEntry, mode }: GameProps) {
           wordEntry={todayWord}
           onShare={handleShare}
           onRandomWord={startRandomGame}
+          onCatClick={onSetBackground}
         />
       )}
     </div>

@@ -1,7 +1,7 @@
 import { useMemo } from 'react'
 import type { GameStatus } from '../hooks/useGame'
 import type { WordEntry } from '../lib/utils'
-import { getRandomCatUrl } from './CatBackground'
+import { getRandomCatIndex, getCatImageUrl } from './CatBackground'
 
 const WIN_MESSAGES = [
   'Purr-fect!',
@@ -51,6 +51,7 @@ interface GameOverProps {
   wordEntry: WordEntry
   onShare: () => void
   onRandomWord: () => void
+  onCatClick: (index: number) => void
 }
 
 export default function GameOver({
@@ -61,8 +62,10 @@ export default function GameOver({
   wordEntry,
   onShare,
   onRandomWord,
+  onCatClick,
 }: GameOverProps) {
-  const catUrl = useMemo(() => getRandomCatUrl(), [])
+  const catIndex = useMemo(() => getRandomCatIndex(), [])
+  const catUrl = getCatImageUrl(catIndex)
   const message = useMemo(
     () => (status === 'won' ? pickRandom(WIN_MESSAGES) : pickRandom(LOSE_MESSAGES)),
     [status]
@@ -76,7 +79,9 @@ export default function GameOver({
         <img
           src={catUrl}
           alt="Cat"
-          className="w-32 h-32 mx-auto rounded-full object-cover border-4 border-pink-200 shadow-md"
+          className="w-32 h-32 mx-auto rounded-full object-cover border-4 border-pink-200 shadow-md cursor-pointer hover:border-pink-400 transition-colors"
+          onClick={() => onCatClick(catIndex)}
+          title="Set as background"
         />
         <h2 className="text-2xl font-bold text-gray-800">
           {message}

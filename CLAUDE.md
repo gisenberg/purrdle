@@ -65,7 +65,7 @@ toe beans,3,The adorable little pink pads...,Nature's cutest jelly beans...,The 
 ```
 
 - 5 columns: `word`, `quality`, `def1`, `def2`, `def3`
-- `word`: lowercase, max 6 characters for single words, spaces allowed for multi-word phrases
+- `word`: lowercase, spaces allowed for multi-word phrases
 - `quality`: 1 (filler), 2 (solid), 3 (best cat words)
 - Fields containing commas get quoted per CSV spec
 - Header row is required
@@ -117,7 +117,7 @@ Deployed via GitHub Pages from the `dist/` directory. Base path is `/purrdle/`.
 ## Common Tasks
 
 ### Adding words
-Add rows to `src/data/words.csv`. Each row needs `word`, `quality`, and 3 definitions. Single words must be 6 characters or fewer. Multi-word phrases have no length limit. Quote fields that contain commas. Run `npm run build` to validate.
+Add rows to `src/data/words.csv`. Each row needs `word`, `quality`, and 3 definitions. Quote fields that contain commas. Run `npm run build` to validate.
 
 ### Changing game mechanics
 Core logic lives in `src/hooks/useGame.ts` (input handling, guess submission) and `src/lib/utils.ts` (evaluation, keyboard states, word selection).

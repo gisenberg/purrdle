@@ -178,8 +178,7 @@ export function getLetterHints(target: string, revealedPositions: Set<number>): 
     }
   }
 
-  const count = Math.floor(nonRevealed.length / 4)
-  if (count === 0) return []
+  if (nonRevealed.length === 0) return []
 
   // Build a map from position to 1-based input index (typing position)
   const inputIndexMap = new Map<number, number>()
@@ -204,7 +203,7 @@ export function getLetterHints(target: string, revealedPositions: Set<number>): 
     [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
   }
 
-  return shuffled.slice(0, count).map((pos) => ({
+  return shuffled.map((pos) => ({
     position: pos,
     letter: target[pos].toUpperCase(),
     inputIndex: inputIndexMap.get(pos)!,

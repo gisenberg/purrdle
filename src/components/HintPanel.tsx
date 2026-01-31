@@ -49,8 +49,6 @@ export default function HintPanel({
     letterHints.length
   )
 
-  const totalSlots = 3 + letterHints.length
-
   const prevLetterUnlockedRef = useRef(letterUnlockedCount)
 
   // Reveal hinted positions on the board when letter hints unlock
@@ -81,122 +79,89 @@ export default function HintPanel({
       <h3 className="text-sm font-semibold text-pink-400 uppercase tracking-wide flex items-center gap-1.5">
         <span role="img" aria-label="paw">🐾</span> Hints
       </h3>
-      {Array.from({ length: totalSlots }, (_, i) => {
-        const isDefinitionSlot = i < 3
-        const unlocked = isDefinitionSlot ? i < defUnlockedCount : (i - 3) < letterUnlockedCount
-        // Compute threshold and progress
-        let threshold: number
-        let prevThreshold: number
-        if (isDefinitionSlot) {
-          threshold = HINT_THRESHOLDS[i] ?? 0
-          prevThreshold = HINT_THRESHOLDS[i - 1] ?? 0
-        } else {
-          const letterIdx = i - 3
-          threshold = getLetterHintThreshold(letterIdx)
-          prevThreshold = letterIdx === 0 ? 60 : getLetterHintThreshold(letterIdx - 1)
-        }
+      {Array.from({ length: 3 }, (_, i) => {
+        const unlocked = i < defUnlockedCount
+        const threshold = HINT_THRESHOLDS[i] ?? 0
+        const prevThreshold = HINT_THRESHOLDS[i - 1] ?? 0
 
-        // Show progress bar for the next locked hint (only one at a time)
-        const showProgress = threshold > 0 && !unlocked && (() => {
-          if (isDefinitionSlot) {
-            return i < defUnlockedCount + 1
-          } else {
-            // Only show letter hint progress if all 3 definitions are unlocked
-            if (defUnlockedCount < 3) return false
-            const letterIdx = i - 3
-            return letterIdx < letterUnlockedCount + 1
-          }
-        })()
-
+        const showProgress = threshold > 0 && !unlocked && i < defUnlockedCount + 1
         const progress = showProgress
           ? Math.min(Math.max(elapsedSeconds - prevThreshold, 0) / (threshold - prevThreshold), 1)
           : 0
 
-        // Should we show a reveal button on this slot?
-        const showRevealButton = !gameOver && !unlocked && isDefinitionSlot && i > 0 && i <= defUnlockedCount
+        const showRevealButton = !gameOver && !unlocked && i > 0 && i <= defUnlockedCount
+        const text = definitions[i]
 
-        if (isDefinitionSlot) {
-          const text = definitions[i]
-          return (
-            <div key={i} className="hint-card">
-              <div className={`hint-card-inner ${unlocked && i > 0 ? 'flipped' : ''}`}>
-                <div
-                  className={`hint-card-front text-sm rounded-lg px-3 py-2 relative overflow-hidden ${
-                    i === 0
-                      ? 'bg-white border border-pink-200 text-gray-700'
-                      : 'bg-white/60 border border-pink-100 text-gray-400'
-                  }`}
-                >
-                  <span className="flex items-center justify-between gap-2">
-                    <span>
-                      {i === 0 && text
-                        ? `1. ${gameOver ? text : censorWord(text, word.word)}`
-                        : `${i + 1}. ???`}
-                    </span>
-                    {showRevealButton && (
-                      <button
-                        onClick={revealNextDef}
-                        className="text-xs text-pink-400 hover:text-pink-500 font-semibold shrink-0 transition-colors"
-                      >
-                        Reveal
-                      </button>
-                    )}
-                  </span>
-                  {showProgress && (
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-pink-100">
-                      <div
-                        className="h-full bg-pink-400 transition-all duration-1000 ease-linear"
-                        style={{ width: `${progress * 100}%` }}
-                      />
-                    </div>
-                  )}
-                </div>
-                {i > 0 && (
-                  <div className="hint-card-back text-sm rounded-lg px-3 py-2 bg-white border border-pink-200 text-gray-700">
-                    {text
-                      ? `${i + 1}. ${gameOver ? text : censorWord(text, word.word)}`
+        return (
+          <div key={i} className="hint-card">
+            <div className={`hint-card-inner ${unlocked && i > 0 ? 'flipped' : ''}`}>
+              <div
+                className={`hint-card-front text-sm rounded-lg px-3 py-2 relative overflow-hidden ${
+                  i === 0
+                    ? 'bg-white border border-pink-200 text-gray-700'
+                    : 'bg-white/60 border border-pink-100 text-gray-400'
+                }`}
+              >
+                <span className="flex items-center justify-between gap-2">
+                  <span>
+                    {i === 0 && text
+                      ? `1. ${gameOver ? text : censorWord(text, word.word)}`
                       : `${i + 1}. ???`}
+                  </span>
+                  {showRevealButton && (
+                    <button
+                      onClick={revealNextDef}
+                      className="text-xs text-pink-400 hover:text-pink-500 font-semibold shrink-0 transition-colors"
+                    >
+                      Reveal
+                    </button>
+                  )}
+                </span>
+                {showProgress && (
+                  <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-pink-100">
+                    <div
+                      className="h-full bg-pink-400 transition-all duration-1000 ease-linear"
+                      style={{ width: `${progress * 100}%` }}
+                    />
                   </div>
                 )}
               </div>
-            </div>
-          )
-        } else {
-          // Letter hint slot
-          const letterIdx = i - 3
-          const hint = letterHints[letterIdx]
-          return (
-            <div key={i} className="hint-card">
-              <div className={`hint-card-inner ${unlocked ? 'flipped' : ''}`}>
-                <div className="hint-card-front text-sm rounded-lg px-3 py-2 relative overflow-hidden bg-white/60 border border-pink-100 text-gray-400">
-                  🔤 ???
-                  {showProgress && (
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-pink-100">
-                      <div
-                        className="h-full bg-pink-400 transition-all duration-1000 ease-linear"
-                        style={{ width: `${progress * 100}%` }}
-                      />
-                    </div>
-                  )}
-                </div>
+              {i > 0 && (
                 <div className="hint-card-back text-sm rounded-lg px-3 py-2 bg-white border border-pink-200 text-gray-700">
-                  {hint
-                    ? `Letter ${hint.inputIndex}: ${hint.letter}`
-                    : '🔤 ???'}
+                  {text
+                    ? `${i + 1}. ${gameOver ? text : censorWord(text, word.word)}`
+                    : `${i + 1}. ???`}
                 </div>
-              </div>
+              )}
             </div>
-          )
-        }
+          </div>
+        )
       })}
-      {!gameOver && hasMoreLetterHints && (
-        <button
-          onClick={revealNextLetter}
-          className="w-full text-sm text-pink-400 hover:text-pink-500 font-semibold py-1.5 rounded-lg border border-pink-200 bg-white/60 hover:bg-white transition-colors"
-        >
-          Reveal a letter
-        </button>
-      )}
+      {!gameOver && hasMoreLetterHints && (() => {
+        const nextLetterIdx = letterUnlockedCount
+        const threshold = getLetterHintThreshold(nextLetterIdx)
+        const prevThreshold = nextLetterIdx === 0 ? 60 : getLetterHintThreshold(nextLetterIdx - 1)
+        const showProgress = defUnlockedCount >= 3 && elapsedSeconds < threshold
+        const progress = showProgress
+          ? Math.min(Math.max(elapsedSeconds - prevThreshold, 0) / (threshold - prevThreshold), 1)
+          : 0
+        return (
+          <button
+            onClick={revealNextLetter}
+            className="w-full text-sm text-pink-400 hover:text-pink-500 font-semibold py-1.5 rounded-lg border border-pink-200 bg-white/60 hover:bg-white transition-colors relative overflow-hidden"
+          >
+            Reveal a letter
+            {showProgress && (
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-pink-100">
+                <div
+                  className="h-full bg-pink-400 transition-all duration-1000 ease-linear"
+                  style={{ width: `${progress * 100}%` }}
+                />
+              </div>
+            )}
+          </button>
+        )
+      })()}
       {gameOver && word.example && (
         <div className="text-xs text-gray-400 italic px-1">
           "{word.example}"

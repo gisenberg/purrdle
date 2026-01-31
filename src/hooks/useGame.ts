@@ -116,6 +116,16 @@ export function useGame(wordEntry: WordEntry, mode: GameMode) {
     setCurrentGuess('')
   }, [target, revealedPositions])
 
+  // Auto-win when all letters have been revealed via hints
+  useEffect(() => {
+    if (gameStatus !== 'playing') return
+    if (inputLength > 0) return
+    const newGuesses = [...guesses, target]
+    setGuesses(newGuesses)
+    setCurrentGuess('')
+    setGameStatus('won')
+  }, [inputLength, gameStatus, guesses, target])
+
   // Snapshot hints used when game ends
   useEffect(() => {
     if (gameStatus !== 'playing' && !hintsUsedRef.current) {

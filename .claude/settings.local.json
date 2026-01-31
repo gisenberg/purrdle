@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create:*)",
+      "Bash(npm install)",
+      "Bash(npx tsc -b)",
+      "Bash(npx vite build)",
+      "Bash(node -e:*)",
+      "Bash(node scripts/add-words.cjs:*)",
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nInitial commit: Urdle - Urban Dictionary Wordle\n\nReact + TypeScript + Vite + Tailwind CSS word guessing game using\nUrban Dictionary slang. Features variable word length, 6 guesses,\nprogressive hint reveals, on-screen keyboard, localStorage persistence,\nand GitHub Pages deployment via Actions.\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git push:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd random word mode and longer vulgar words\n\n- Random Word button on game over modal for endless play\n- Random games don''t overwrite daily localStorage state\n- Dynamic tile sizing for words up to 12 characters\n- Hint definitions censor the target word during gameplay\n- 484 words including longer/vulgar Urban Dictionary entries\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")",
+      "Bash(git commit:*)",
+      "Bash(node scripts/backfill-defs.cjs:*)",
+      "Bash(node:*)",
+      "Bash(npx tsc --noEmit)",
+      "Bash(npm run build)",
+      "WebFetch(domain:www.urbandictionary.com)",
+      "WebSearch",
+      "WebFetch(domain:api.thecatapi.com)",
+      "Bash(curl:*)",
+      "Bash(timeout 8 npx vite:*)"
+    ]
+  }
+}

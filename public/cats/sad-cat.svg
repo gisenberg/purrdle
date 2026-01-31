@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- Sleepy/sad ragdoll cat face -->
+  <!-- Ears (slightly droopy) -->
+  <path d="M25 55 L18 22 L48 45 Z" fill="#f9a8d4" stroke="#ec4899" stroke-width="1.5"/>
+  <path d="M95 55 L102 22 L72 45 Z" fill="#f9a8d4" stroke="#ec4899" stroke-width="1.5"/>
+  <!-- Inner ears -->
+  <path d="M28 50 L24 30 L44 45 Z" fill="#fbcfe8"/>
+  <path d="M92 50 L96 30 L76 45 Z" fill="#fbcfe8"/>
+  <!-- Head -->
+  <ellipse cx="60" cy="68" rx="38" ry="35" fill="#fce7f3" stroke="#ec4899" stroke-width="1.5"/>
+  <!-- Face mask (ragdoll marking) -->
+  <ellipse cx="60" cy="62" rx="20" ry="15" fill="#fff1f2" opacity="0.6"/>
+  <!-- Eyes - big sad/sleepy eyes -->
+  <ellipse cx="46" cy="60" rx="6" ry="7" fill="white" stroke="#7c3aed" stroke-width="1.5"/>
+  <ellipse cx="74" cy="60" rx="6" ry="7" fill="white" stroke="#7c3aed" stroke-width="1.5"/>
+  <ellipse cx="46" cy="62" rx="3.5" ry="4" fill="#7c3aed"/>
+  <ellipse cx="74" cy="62" rx="3.5" ry="4" fill="#7c3aed"/>
+  <circle cx="44" cy="60" r="1.5" fill="white"/>
+  <circle cx="72" cy="60" r="1.5" fill="white"/>
+  <!-- Sad eyebrows -->
+  <path d="M38 52 Q43 50 52 54" fill="none" stroke="#c084fc" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M82 52 Q77 50 68 54" fill="none" stroke="#c084fc" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Nose -->
+  <ellipse cx="60" cy="70" rx="3.5" ry="2.5" fill="#f472b6"/>
+  <!-- Mouth - little frown -->
+  <path d="M54 77 Q60 74 66 77" fill="none" stroke="#ec4899" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Whiskers (slightly droopy) -->
+  <line x1="28" y1="68" x2="46" y2="70" stroke="#d946ef" stroke-width="1" opacity="0.5"/>
+  <line x1="28" y1="74" x2="46" y2="73" stroke="#d946ef" stroke-width="1" opacity="0.5"/>
+  <line x1="74" y1="70" x2="92" y2="68" stroke="#d946ef" stroke-width="1" opacity="0.5"/>
+  <line x1="74" y1="73" x2="92" y2="74" stroke="#d946ef" stroke-width="1" opacity="0.5"/>
+  <!-- Blush -->
+  <circle cx="42" cy="72" r="5" fill="#fda4af" opacity="0.25"/>
+  <circle cx="78" cy="72" r="5" fill="#fda4af" opacity="0.25"/>
+  <!-- Tear drop -->
+  <path d="M52 64 Q53 68 52 70 Q51 68 52 64" fill="#a5b4fc" opacity="0.5"/>
+</svg>

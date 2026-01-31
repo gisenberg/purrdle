@@ -89,6 +89,7 @@ export default function Game({ wordEntry, mode }: GameProps) {
         hintedPositions={hintedPositions}
         allRevealedPositions={allRevealedPositions}
         target={target}
+        gameStatus={gameStatus}
       />
 
       <HintPanel

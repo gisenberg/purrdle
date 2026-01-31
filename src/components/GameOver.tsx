@@ -3,6 +3,46 @@ import type { GameStatus } from '../hooks/useGame'
 import type { WordEntry } from '../lib/utils'
 import { getRandomCatUrl } from './CatBackground'
 
+const WIN_MESSAGES = [
+  'Purr-fect!',
+  'You\'re the cat\'s meow!',
+  'Claw-some job!',
+  'Feline fine!',
+  'That was paws-itively brilliant!',
+  'You\'re one smart kitty!',
+  'Fur-bulous work!',
+  'Meow-velous!',
+  'You nailed it, whisker wizard!',
+  'Cat-tastic!',
+  'Hiss-tory in the making!',
+  'Top cat!',
+  'You\'re purr-fection!',
+  'Fur real, nice work!',
+  'Un-fur-gettable!',
+  'Meow that\'s impressive!',
+  'Tail-ented solver!',
+  'Litter-ally amazing!',
+  'You\'re a cat-ch!',
+  'Whisker me impressed!',
+]
+
+const LOSE_MESSAGES = [
+  'Maybe next time, kitten!',
+  'Don\'t fur-get to try again!',
+  'Every cat has its off day!',
+  'Paws and try again!',
+  'Not your luckiest life!',
+  'Shake it off, kitty cat!',
+  'Even cats miss the laser dot sometimes!',
+  'Better luck next meow!',
+  'That was a tough one, fur real!',
+  'Time for a cat nap and a retry!',
+]
+
+function pickRandom(arr: string[]): string {
+  return arr[Math.floor(Math.random() * arr.length)]
+}
+
 interface GameOverProps {
   status: GameStatus
   target: string
@@ -23,6 +63,10 @@ export default function GameOver({
   onRandomWord,
 }: GameOverProps) {
   const catUrl = useMemo(() => getRandomCatUrl(), [])
+  const message = useMemo(
+    () => (status === 'won' ? pickRandom(WIN_MESSAGES) : pickRandom(LOSE_MESSAGES)),
+    [status]
+  )
 
   if (status === 'playing') return null
 
@@ -35,7 +79,7 @@ export default function GameOver({
           className="w-32 h-32 mx-auto rounded-full object-cover border-4 border-pink-200 shadow-md"
         />
         <h2 className="text-2xl font-bold text-gray-800">
-          {status === 'won' ? 'Purr-fect!' : 'Maybe next time, kitten!'}
+          {message}
         </h2>
 
         <p className="text-lg text-gray-700">

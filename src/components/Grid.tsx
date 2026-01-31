@@ -1,6 +1,7 @@
 import Row from './Row'
 import type { EvaluatedLetter } from '../lib/utils'
 import { MAX_GUESSES } from '../lib/utils'
+import type { GameStatus } from '../hooks/useGame'
 
 interface GridProps {
   evaluatedGuesses: EvaluatedLetter[][]
@@ -11,6 +12,7 @@ interface GridProps {
   hintedPositions: Set<number>
   allRevealedPositions: Set<number>
   target: string
+  gameStatus: GameStatus
 }
 
 export default function Grid({
@@ -22,62 +24,75 @@ export default function Grid({
   hintedPositions,
   allRevealedPositions,
   target,
+  gameStatus,
 }: GridProps) {
   const rows: EvaluatedLetter[][] = []
+  const gameOver = gameStatus !== 'playing'
 
   // Submitted guesses
   for (const guess of evaluatedGuesses) {
     rows.push(guess)
   }
 
-  // Current guess row
-  if (rows.length < MAX_GUESSES) {
-    const currentRow: EvaluatedLetter[] = []
-    let typedIdx = 0
-    for (let i = 0; i < wordLength; i++) {
-      if (hintedPositions.has(i)) {
-        currentRow.push({
-          letter: target[i],
-          state: 'hinted',
-        })
-      } else if (revealedPositions.has(i)) {
-        currentRow.push({
-          letter: target[i],
-          state: 'revealed',
-        })
-      } else {
-        currentRow.push({
-          letter: currentGuess[typedIdx] || '',
-          state: 'empty',
-        })
-        typedIdx++
+  if (!gameOver) {
+    // Current guess row
+    if (rows.length < MAX_GUESSES) {
+      const currentRow: EvaluatedLetter[] = []
+      let typedIdx = 0
+      for (let i = 0; i < wordLength; i++) {
+        if (hintedPositions.has(i)) {
+          currentRow.push({
+            letter: target[i],
+            state: 'hinted',
+          })
+        } else if (revealedPositions.has(i)) {
+          currentRow.push({
+            letter: target[i],
+            state: 'revealed',
+          })
+        } else {
+          currentRow.push({
+            letter: currentGuess[typedIdx] || '',
+            state: 'empty',
+          })
+          typedIdx++
+        }
       }
+      rows.push(currentRow)
     }
-    rows.push(currentRow)
-  }
 
-  // Empty remaining rows
-  while (rows.length < MAX_GUESSES) {
-    const emptyRow: EvaluatedLetter[] = []
-    for (let i = 0; i < wordLength; i++) {
-      if (hintedPositions.has(i)) {
-        emptyRow.push({
-          letter: target[i],
-          state: 'hinted',
-        })
-      } else if (revealedPositions.has(i)) {
-        emptyRow.push({
-          letter: target[i],
-          state: 'revealed',
-        })
-      } else {
-        emptyRow.push({
-          letter: '',
-          state: 'empty',
-        })
+    // Empty remaining rows
+    while (rows.length < MAX_GUESSES) {
+      const emptyRow: EvaluatedLetter[] = []
+      for (let i = 0; i < wordLength; i++) {
+        if (hintedPositions.has(i)) {
+          emptyRow.push({
+            letter: target[i],
+            state: 'hinted',
+          })
+        } else if (revealedPositions.has(i)) {
+          emptyRow.push({
+            letter: target[i],
+            state: 'revealed',
+          })
+        } else {
+          emptyRow.push({
+            letter: '',
+            state: 'empty',
+          })
+        }
       }
+      rows.push(emptyRow)
     }
-    rows.push(emptyRow)
+  } else {
+    // Game over: fill remaining rows with plain empty tiles
+    while (rows.length < MAX_GUESSES) {
+      const emptyRow: EvaluatedLetter[] = Array.from({ length: wordLength }, () => ({
+        letter: '',
+        state: 'empty' as const,
+      }))
+      rows.push(emptyRow)
+    }
   }
 
   // Find the cursor position in the current guess row (first empty non-revealed tile)

@@ -24,6 +24,26 @@ const WIN_MESSAGES = [
   'Litter-ally amazing!',
   'You\'re a cat-ch!',
   'Whisker me impressed!',
+  'You\'re paws-itively genius!',
+  'Meow-nificent work!',
+  'Kitty-credible!',
+  'You\'ve got cat-titude!',
+  'Purr-haps you\'re a genius!',
+  'That was im-paws-ible!',
+  'Cat-egorically awesome!',
+  'Fur-midable skills!',
+  'You\'re a purr-fessional!',
+  'Claw-ver kitty!',
+  'Meow you\'re showing off!',
+  'Paws-itively perfect!',
+  'You\'re cat-ivating!',
+  'Fur-tastic finish!',
+  'You\'re meow-zing!',
+  'Whisker-licking good!',
+  'Cat got your victory!',
+  'You\'re purr-ty smart!',
+  'A-meow-zing job!',
+  'You\'re the purr-oud winner!',
 ]
 
 const LOSE_MESSAGES = [
@@ -37,6 +57,16 @@ const LOSE_MESSAGES = [
   'Better luck next meow!',
   'That was a tough one, fur real!',
   'Time for a cat nap and a retry!',
+  'You\'ll get it next time, whiskers!',
+  'Even the best cats land on their feet!',
+  'Purr-haps try again?',
+  'No worries, you\'re still purr-fect!',
+  'That word was a fur-ocious challenge!',
+  'You\'ve got 8 more lives left!',
+  'Meow\'s a good time for another try!',
+  'That was im-paws-ibly hard!',
+  'Keep your whiskers up and try again!',
+  'Curiosity didn\'t work this time, but try again!',
 ]
 
 function pickRandom(arr: string[]): string {

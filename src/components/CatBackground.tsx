@@ -2,7 +2,8 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 
 const RAGDOLL_COUNT = 31
 const GENERAL_COUNT = 100
-const TOTAL = RAGDOLL_COUNT + GENERAL_COUNT
+const PERSONAL_COUNT = 111
+const TOTAL = RAGDOLL_COUNT + GENERAL_COUNT + PERSONAL_COUNT
 const ROTATE_INTERVAL = 45_000
 const FADE_DURATION = 2000
 
@@ -11,7 +12,10 @@ function getImageUrl(index: number): string {
   if (index < RAGDOLL_COUNT) {
     return `${base}cats/ragdoll/${index + 1}.jpg`
   }
-  return `${base}cats/photos/${index - RAGDOLL_COUNT + 1}.jpg`
+  if (index < RAGDOLL_COUNT + GENERAL_COUNT) {
+    return `${base}cats/photos/${index - RAGDOLL_COUNT + 1}.jpg`
+  }
+  return `${base}cats/personal/${index - RAGDOLL_COUNT - GENERAL_COUNT + 1}.jpg`
 }
 
 function randomIndex(exclude?: number): number {

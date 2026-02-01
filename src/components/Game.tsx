@@ -1,4 +1,5 @@
 import { useEffect, useCallback, useState } from 'react'
+import confetti from 'canvas-confetti'
 import { useGame } from '../hooks/useGame'
 import { MAX_GUESSES, type WordEntry } from '../lib/utils'
 import type { GameMode } from './App'
@@ -36,6 +37,21 @@ export default function Game({ wordEntry, mode, onSetBackground }: GameProps) {
   } = useGame(wordEntry, mode)
 
   const [showModal, setShowModal] = useState(false)
+
+  // Fire confetti when game ends
+  useEffect(() => {
+    if (gameStatus === 'won') {
+      const colors = ['#ff6b6b', '#ff9f43', '#feca57', '#48dbfb', '#0abde3', '#a78bfa', '#f472b6']
+      confetti({ particleCount: 150, angle: 60, spread: 70, origin: { x: 0, y: 0.7 }, colors })
+      confetti({ particleCount: 150, angle: 120, spread: 70, origin: { x: 1, y: 0.7 }, colors })
+      setTimeout(() => {
+        confetti({ particleCount: 100, angle: 80, spread: 60, origin: { x: 0.2, y: 0.6 }, colors })
+        confetti({ particleCount: 100, angle: 100, spread: 60, origin: { x: 0.8, y: 0.6 }, colors })
+      }, 300)
+    } else if (gameStatus === 'lost') {
+      confetti({ particleCount: 50, spread: 70, origin: { y: 0.7 }, colors: ['#d8b4fe', '#e9d5ff', '#feca57', '#48dbfb'] })
+    }
+  }, [gameStatus])
 
   // Show modal after a delay when game ends
   useEffect(() => {

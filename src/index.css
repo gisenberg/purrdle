@@ -70,8 +70,8 @@ body {
   inset: 0;
   background: radial-gradient(
     ellipse 50% 45% at center,
-    rgba(250, 245, 255, 0.78) 0%,
-    rgba(250, 245, 255, 0.40) 60%,
-    rgba(250, 245, 255, 0.10) 100%
+    rgba(250, 245, 255, 0.35) 0%,
+    rgba(250, 245, 255, 0.12) 60%,
+    rgba(250, 245, 255, 0.0) 100%
   );
 }

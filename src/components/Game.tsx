@@ -96,7 +96,7 @@ export default function Game({ wordEntry, mode, onSetBackground }: GameProps) {
   const gameOver = gameStatus !== 'playing'
 
   return (
-    <div className="flex flex-col items-center w-full h-full">
+    <div className="flex flex-col items-center w-full h-full sm:h-auto">
       <div className="flex flex-col items-center gap-4 sm:gap-6 w-full flex-1 min-h-0 justify-center">
         <Grid
           evaluatedGuesses={evaluatedGuesses}

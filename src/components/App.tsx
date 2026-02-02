@@ -62,9 +62,9 @@ export default function App() {
   }, [hash])
 
   return (
-    <div className="min-h-screen bg-purple-50 text-gray-800 flex flex-col paw-bg relative">
+    <div className="h-[100dvh] bg-purple-50 text-gray-800 flex flex-col paw-bg relative overflow-hidden">
       <CatBackground current={bg.current} fading={bg.fading} />
-      <header className="border-b border-pink-200 py-1.5 sm:py-2 px-3 bg-white/60 relative z-10">
+      <header className="border-b border-pink-200 py-1.5 sm:py-2 px-3 bg-white/60 relative z-10 shrink-0">
         <div className="flex items-center justify-between">
           <div className="w-16 sm:w-20" />
           <div className="flex items-center gap-2">
@@ -122,7 +122,7 @@ export default function App() {
         </div>
       </header>
 
-      <main className="flex flex-col items-center py-2 sm:py-3 px-2 relative z-10">
+      <main className="flex flex-col items-center py-2 sm:py-3 px-2 relative z-10 flex-1 min-h-0">
         <Game key={route.wordEntry.word} wordEntry={route.wordEntry} mode={route.mode} onSetBackground={bg.goTo} />
       </main>
     </div>

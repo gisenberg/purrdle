@@ -96,37 +96,41 @@ export default function Game({ wordEntry, mode, onSetBackground }: GameProps) {
   const gameOver = gameStatus !== 'playing'
 
   return (
-    <div className="flex flex-col items-center gap-4 sm:gap-6 w-full">
-      <Grid
-        evaluatedGuesses={evaluatedGuesses}
-        currentGuess={currentGuess}
-        wordLength={wordLength}
-        shakeRow={shakeRow}
-        revealedPositions={revealedPositions}
-        hintedPositions={hintedPositions}
-        allRevealedPositions={allRevealedPositions}
-        target={target}
-        gameStatus={gameStatus}
-      />
+    <div className="flex flex-col items-center w-full h-full">
+      <div className="flex flex-col items-center gap-4 sm:gap-6 w-full flex-1 min-h-0 justify-center">
+        <Grid
+          evaluatedGuesses={evaluatedGuesses}
+          currentGuess={currentGuess}
+          wordLength={wordLength}
+          shakeRow={shakeRow}
+          revealedPositions={revealedPositions}
+          hintedPositions={hintedPositions}
+          allRevealedPositions={allRevealedPositions}
+          target={target}
+          gameStatus={gameStatus}
+        />
 
-      <HintPanel
-        word={todayWord}
-        guessCount={guesses.length}
-        gameOver={gameOver}
-        elapsedSeconds={elapsedSeconds}
-        target={target}
-        revealedPositions={revealedPositions}
-        onRevealPosition={revealHintPosition}
-      />
+        <HintPanel
+          word={todayWord}
+          guessCount={guesses.length}
+          gameOver={gameOver}
+          elapsedSeconds={elapsedSeconds}
+          target={target}
+          revealedPositions={revealedPositions}
+          onRevealPosition={revealHintPosition}
+        />
+      </div>
 
-      <Keyboard
-        guesses={guesses}
-        target={target}
-        revealedPositions={allRevealedPositions}
-        onKey={addLetter}
-        onEnter={submitGuess}
-        onDelete={deleteLetter}
-      />
+      <div className="shrink-0 w-full pb-2 pt-1">
+        <Keyboard
+          guesses={guesses}
+          target={target}
+          revealedPositions={allRevealedPositions}
+          onKey={addLetter}
+          onEnter={submitGuess}
+          onDelete={deleteLetter}
+        />
+      </div>
 
       {showModal && (
         <GameOver

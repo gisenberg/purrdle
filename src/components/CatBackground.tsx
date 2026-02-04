@@ -2,7 +2,7 @@ import { useState, useEffect, useCallback, useRef } from 'react'
 
 const RAGDOLL_COUNT = 31
 const GENERAL_COUNT = 100
-const PERSONAL_COUNT = 111
+const PERSONAL_COUNT = 138
 const TOTAL = RAGDOLL_COUNT + GENERAL_COUNT + PERSONAL_COUNT
 const ROTATE_INTERVAL = 45_000
 const FADE_DURATION = 2000

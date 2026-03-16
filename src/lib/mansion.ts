@@ -3,6 +3,7 @@
 export const BREEDS = [
   'ragdoll', 'orange-tabby', 'tuxedo', 'calico', 'siamese',
   'russian-blue', 'persian', 'scottish-fold', 'maine-coon', 'bengal',
+  'black-cat',
 ] as const
 
 export type Breed = typeof BREEDS[number]
@@ -18,6 +19,7 @@ export const BREED_LABELS: Record<Breed, string> = {
   'scottish-fold': 'Scottish Fold',
   'maine-coon': 'Maine Coon',
   'bengal': 'Bengal',
+  'black-cat': 'Black Cat',
 }
 
 export const BREED_COLORS: Record<Breed, string> = {
@@ -31,6 +33,7 @@ export const BREED_COLORS: Record<Breed, string> = {
   'scottish-fold': 'bg-indigo-300',
   'maine-coon': 'bg-red-300',
   'bengal': 'bg-amber-400',
+  'black-cat': 'bg-gray-800',
 }
 
 export const BREED_TEXT_COLORS: Record<Breed, string> = {
@@ -44,6 +47,7 @@ export const BREED_TEXT_COLORS: Record<Breed, string> = {
   'scottish-fold': 'text-indigo-800',
   'maine-coon': 'text-red-800',
   'bengal': 'text-amber-900',
+  'black-cat': 'text-gray-100',
 }
 
 export const BREED_INITIALS: Record<Breed, string> = {
@@ -57,6 +61,7 @@ export const BREED_INITIALS: Record<Breed, string> = {
   'scottish-fold': 'F',
   'maine-coon': 'M',
   'bengal': 'G',
+  'black-cat': 'K',
 }
 
 export const MAX_TIER = 7
@@ -218,7 +223,14 @@ export function loadMansionState(): MansionState | null {
   try {
     const raw = localStorage.getItem(STORAGE_KEY)
     if (!raw) return null
-    return JSON.parse(raw) as MansionState
+    const state = JSON.parse(raw) as MansionState
+    // Migrate: ensure all current breeds exist in progress (handles new breeds)
+    for (const b of BREEDS) {
+      if (!(b in state.progress)) {
+        state.progress[b] = 0
+      }
+    }
+    return state
   } catch {
     return null
   }

@@ -24,6 +24,7 @@ const sizeClasses = {
 
 export default function CatSprite({ cat, size = 'md' }: CatSpriteProps) {
   const url = getSpriteUrl(cat.breed, cat.tier)
+  if (!url) return null
 
   return (
     <img

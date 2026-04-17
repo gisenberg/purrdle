@@ -12,7 +12,7 @@ interface MansionProgressProps {
 
 export default function MansionProgress({ progress }: MansionProgressProps) {
   return (
-    <div className="w-[95vw] max-w-3xl mx-auto mt-2 bg-white/70 rounded-xl p-2 backdrop-blur-sm">
+    <div className="w-full max-w-3xl mx-auto mt-2 bg-white/70 rounded-xl p-2 backdrop-blur-sm">
       <div className="grid grid-cols-11 gap-1 sm:gap-1.5">
         {BREEDS.map((breed) => {
           const tier = progress[breed]

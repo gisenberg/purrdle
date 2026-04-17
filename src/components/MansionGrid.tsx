@@ -19,7 +19,7 @@ const MansionGrid = forwardRef<HTMLDivElement, MansionGridProps>(
     return (
       <div
         ref={ref}
-        className="grid gap-1 w-[95vw] max-w-3xl mx-auto touch-none select-none"
+        className="grid gap-1 w-full max-w-3xl mx-auto touch-none select-none"
         style={{ gridTemplateColumns: `repeat(${GRID_COLS}, 1fr)` }}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}

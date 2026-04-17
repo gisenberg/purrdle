@@ -27,7 +27,7 @@ export default function Mansion() {
         }}
       />
       {/* Content - above background */}
-      <div className="flex flex-col items-center w-full flex-1 min-h-0 gap-2 relative z-10">
+      <div className="flex flex-col items-center w-full flex-1 min-h-0 gap-2 relative z-10 px-2.5">
         {/* Header */}
         <div className="text-center">
           <h2 className="text-lg sm:text-xl font-bold text-pink-600">
